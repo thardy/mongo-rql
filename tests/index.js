@@ -335,6 +335,29 @@ define(function (require) {
 			expected.limit = 10;
 
 			assert.deepEqual(actual, expected);
-		}
+		},
+
+        'can query a date': function() {
+            var query = new Query().lt('created', new Date(2015, 6, 10)),
+                actual = mongoRql(query);
+
+            expected.criteria = {
+                'created': { $lt: new Date(2015, 6, 10) }
+            };
+
+            assert.deepEqual(actual, expected);
+        },
+
+        'can parse a string query with a date': function () {
+            var dateQuery = 'created=lt=date:2015-06-10T00:00:00Z',
+                query = new Query(dateQuery),
+                actual = mongoRql(query);
+
+            expected.criteria = {
+                'created': { $lt: new Date(2015, 6, 10) }
+            };
+
+            assert.deepEqual(actual, expected);
+        }
 	});
 });
