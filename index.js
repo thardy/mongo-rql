@@ -22,7 +22,7 @@ function toMongo(value, query) {
 	var operators = parse.operators,
 		operator;
 
-	if (value && typeof value === 'object' && !(value instanceof RegExp)) {
+	if (value && typeof value === 'object' && !(value instanceof RegExp) && !(value instanceof Date)) {
 		if (Array.isArray(value)) {
 			return value.map(function (v) {
 				return toMongo(v);
@@ -154,7 +154,7 @@ function and(a, b) {
 			}
 		}
 
-		if (source && typeof source === 'object' && !(source instanceof RegExp)) {
+		if (source && typeof source === 'object' && !(source instanceof RegExp) && !(source instanceof Date)) {
 			if (Array.isArray(source)) {
 				// shallow copy arrays
 				source = (dest || []).concat(source);
